@@ -70,7 +70,7 @@
     
     // Assert
     XCTAssertNotNil(cell);
-    XCTAssertEqual([cell class], [TestTableViewCellWithDataSource class]);
+    XCTAssertTrue([cell isKindOfClass:[TestTableViewCellWithDataSource class]]);
 }
 
 - (void)testDefaultTableViewCellFactory_cellWith_CellDefinitionWithView_should_init_new_subclassed_tableviewcell {
@@ -81,7 +81,7 @@
     // Act
     DefaultTableViewCellFactory *factory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
     TableViewCellDefinitionWithView *cellDefinition = [[TableViewCellDefinitionWithView alloc] init];
-    cellDefinition.identifier = @"TestIdentifier1";
+    cellDefinition.identifier = @"TestIdentifier1_for_view";
     cellDefinition.ownerClass = [TestTableViewCell class];
     cellDefinition.nibName = @"TestTableViewCell";
     
@@ -89,7 +89,7 @@
     
     // Assert
     XCTAssertNotNil(cell);
-    XCTAssertEqual([cell class], cellDefinition.ownerClass);
+    XCTAssertTrue([cell isKindOfClass:cellDefinition.ownerClass]);
 }
 
 - (void)testDefaultTableViewCellFactory_cellWith_CellDefinitionWithIdentifier_should_set_cell_Data {
