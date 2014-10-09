@@ -291,6 +291,36 @@
     XCTAssertEqual(height, 140.0);
 }
 
+- (void)testTableViewDataSourceAndDelegate_should_return_row_height_from_CellDefinitionWithView_view_frame
+{
+    // Arrange
+    UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
+    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
+    TableViewCellDefinitionWithView *cell11 = [[TableViewCellDefinitionWithView alloc] init];
+    cell11.identifier = @"TestIdentifier1_for_view";
+    cell11.ownerClass = [TestTableViewCell class];
+    cell11.nibName = @"TestTableViewCell";
+    [sectionDefinition1 addCell:cell11];
+    [source addSection:sectionDefinition1];
+    
+    DefaultTableViewCellFactory *cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
+    source.cellFactory = cellFactory;
+    
+    // Act
+    tableView.delegate = source;
+    tableView.dataSource = source;
+    [tableView reloadData];
+    [tableView setNeedsDisplay];
+    [tableView setNeedsLayout];
+    
+    // Assert
+    UITableViewCell *actualCell11 = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    CGRect frame = actualCell11.frame;
+    float height = frame.size.height;
+    XCTAssertEqual(height, 180.0);
+}
+
 /*
 - (void)testPerformanceExample {
     // This is an example of a performance test case.

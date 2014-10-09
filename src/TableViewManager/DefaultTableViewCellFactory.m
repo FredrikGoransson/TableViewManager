@@ -10,6 +10,7 @@
 
 @implementation DefaultTableViewCellFactory {
     UITableView *tableView;
+    NSMutableDictionary *cachedViews;
 }
 
 -(instancetype)initWithTableView:(UITableView*)aTableView
@@ -17,8 +18,17 @@
     self = [super init];
     if (self) {
         tableView = aTableView;
+        cachedViews = [[NSMutableDictionary alloc] init];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMemoryWarning:) name: UIApplicationDidReceiveMemoryWarningNotification object:nil];
+
     }
     return self;
+}
+
+- (void) handleMemoryWarning:(NSNotification *)notification
+{
+    [cachedViews removeAllObjects];
 }
 
 -(UITableViewCell*)cellWith:(TableViewCellDefinition *)cellDefinition
@@ -29,13 +39,19 @@
     {
         TableViewCellDefinitionWithView *cellDefinitionWithView = (TableViewCellDefinitionWithView*)cellDefinition;
         
-        cell = [tableView dequeueReusableCellWithIdentifier:cellDefinitionWithView.identifier];
+        NSString *identifier = cellDefinitionWithView.identifier;
+        if( identifier == nil)
+        {
+            identifier = [NSString stringWithFormat:@"Identifier-for-TableViewCellDefinitionWithView-%p", cellDefinition];
+        }
+        cell = (UITableViewCell*)[cachedViews objectForKey:identifier];
         if( cell == nil )
         {
             if( [cellDefinitionWithView.ownerClass instancesRespondToSelector:@selector(initWithStyle:reuseIdentifier:)])
             {
                 UITableViewCell *cellOwner = (UITableViewCell*)[[cellDefinitionWithView.ownerClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellDefinitionWithView.identifier];
                 cell = [[[NSBundle bundleForClass:cellDefinitionWithView.ownerClass] loadNibNamed:cellDefinitionWithView.nibName owner:cellOwner options:nil] firstObject];
+                [cachedViews setObject:cell forKey:identifier];
             }
         }
     }

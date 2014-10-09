@@ -69,6 +69,11 @@
             float height = [heightSpecifier height];
             if( height >= 0) return height;
         }
+        if ( [cellDefinition isKindOfClass:[TableViewCellDefinitionWithView class]])
+        {
+            UITableViewCell *cell = [self.cellFactory cellWith:cellDefinition];
+            return cell.frame.size.height;
+        }
     }
     return tableView.rowHeight;
 }
