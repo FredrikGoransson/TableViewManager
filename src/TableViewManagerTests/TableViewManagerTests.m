@@ -118,13 +118,15 @@
     XCTAssertNoThrow([tableView reloadData]);
 }
 
-- (void)testTableViewDataSourceAndDelegate_should_be_assignable_as_delegate_for_tableview{
+- (void)testTableViewDataSourceAndDelegate_should_be_assignable_as_delegate_and_datasource_for_tableview{
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
     TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    source.cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
     
     // Act
+    tableView.dataSource = source;
     tableView.delegate = source;
     XCTAssertNoThrow([tableView reloadData]);
 }
@@ -134,6 +136,7 @@
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
     TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    source.cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewSectionDefinition *sectionDefinition2 = [[TableViewSectionDefinition alloc] init];
     
@@ -154,6 +157,8 @@
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
     TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    source.cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
+
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewCellDefinition *cell11 = [[TableViewCellDefinition alloc] init];
     TableViewCellDefinition *cell12 = [[TableViewCellDefinition alloc] init];
@@ -270,8 +275,6 @@
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewCellDefinitionWithView *cell11 = [[TableViewCellDefinitionWithView alloc] init];
     cell11.ownerClass = [TestTableViewCell class];
-    //cell11.nibName = @"TestTableViewCell";
-    //NSStringFromClass(cell11.ownerClass);
     [sectionDefinition1 addCell:cell11];
     [source addSection:sectionDefinition1];
     

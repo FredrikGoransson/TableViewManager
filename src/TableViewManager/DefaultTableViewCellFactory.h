@@ -10,10 +10,10 @@
 #import <UIKit/UIKit.h>
 #import "TableViewCellFactory.h"
 #import "TableViewCellDataSource.h"
+#import "TableViewSectionDataSource.h"
 
 @interface DefaultTableViewCellFactory : NSObject<TableViewCellFactory>
 
 -(instancetype)initWithTableView:(UITableView*)tableView;
-
 
 @end

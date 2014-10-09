@@ -7,6 +7,7 @@
 //
 
 #import "TableViewDataSourceAndDelegate.h"
+#import "DefaultTableViewCellFactory.h"
 
 @implementation TableViewDataSourceAndDelegate
 
@@ -42,62 +43,76 @@
     return nil;
 }
 
+- (void)EnsureCellFactory
+{
+    if( self.cellFactory == nil)
+    {
+        [NSException raise:@"TableViewDataSourceAndDelegate cellFactory is nil" format:@"TableViewDataSourceAndDelegate must have property cellFactory set to an instance conforming to protocol TableViewCellFactory"];
+    }
+}
+
 #pragma mark - Table View Delegate
 
 // Variable height support
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    /*
-    if( self.cellFactory != nil)
-    {
-        TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
-        UITableViewCell *cell = [self.cellFactory cellWith:cellDefinition];
-        return cell.bounds.size.height;
-    }*/
     return tableView.rowHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if( self.cellFactory != nil)
+    [self EnsureCellFactory];
+
+    TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
+    if( [cellDefinition conformsToProtocol:@protocol(TableViewCellHeightSpecifier)])
     {
-        TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
-        if( [cellDefinition conformsToProtocol:@protocol(TableViewCellHeightSpecifier)])
-        {
-            id<TableViewCellHeightSpecifier> heightSpecifier = (id<TableViewCellHeightSpecifier>)cellDefinition;
-            float height = [heightSpecifier height];
-            if( height >= 0) return height;
-        }
-        if ( [cellDefinition isKindOfClass:[TableViewCellDefinitionWithView class]])
-        {
-            UITableViewCell *cell = [self.cellFactory cellWith:cellDefinition];
-            return cell.frame.size.height;
-        }
+        id<TableViewCellHeightSpecifier> heightSpecifier = (id<TableViewCellHeightSpecifier>)cellDefinition;
+        float height = [heightSpecifier height];
+        if( height >= 0) return height;
     }
+    if ( [cellDefinition isKindOfClass:[TableViewCellDefinitionWithView class]])
+    {
+        UITableViewCell *cell = [self.cellFactory cellWith:cellDefinition];
+        return cell.frame.size.height;
+    }
+
     return tableView.rowHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return -1;
+    [self EnsureCellFactory];
+    
+    TableViewSectionDefinition *sectionDefinition = [self sectionAtIndex:section];
+    if( [sectionDefinition conformsToProtocol:@protocol(TableViewSectionHeightSpecifier) ])
+    {
+        id<TableViewSectionHeightSpecifier> heightSpecifier = (id<TableViewSectionHeightSpecifier>)sectionDefinition;
+        float height = [heightSpecifier headerHeight];
+        if( height >= 0) return height;
+    }
+    if ( [sectionDefinition isKindOfClass:[TableViewSectionDefinitionWithHeaderView class]])
+    {
+        UIView *view = [self.cellFactory headerViewWith:sectionDefinition];
+        return view.frame.size.height;
+    }
+    
+    return tableView.sectionHeaderHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return -1;
+    return tableView.sectionFooterHeight;
 }
 
 #pragma mark - Table View Data Source
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if( self.cellFactory != nil)
-    {
-        TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
-        return [self.cellFactory cellWith:cellDefinition];
-    }
-    return nil;
+    [self EnsureCellFactory];
+
+    TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
+    return [self.cellFactory cellWith:cellDefinition];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -110,25 +125,25 @@
 {
     return [self.sections count];
 }
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    [self EnsureCellFactory];
+    
+    TableViewSectionDefinition *sectionDefinition = [self sectionAtIndex:section];
+    return [self.cellFactory headerViewWith:sectionDefinition];
+}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return nil;
+    TableViewSectionDefinition *sectionDefinition = [self sectionAtIndex:section];
+    NSString *title = [NSString stringWithFormat:@"%@", sectionDefinition.data];
+
+    return title;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
     return nil;
-}
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
-{
-    return nil;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
-{
-    return 0;
 }
 
 @end

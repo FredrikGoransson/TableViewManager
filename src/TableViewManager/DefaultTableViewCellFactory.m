@@ -78,9 +78,9 @@
             UITableViewCell<TableViewCellDataSource> *cellWithDataSource = (UITableViewCell<TableViewCellDataSource>*)cell;
             [cellWithDataSource setData:cellDefinition.data];
         }
-        else
+        else if( [cellDefinition.data isKindOfClass:[NSString class]])
         {
-            NSString *dataAsString = [NSString stringWithFormat:@"%@", cellDefinition.data];
+            NSString *dataAsString = (NSString*)cellDefinition.data;
             cell.textLabel.text = dataAsString;
         }
     }
@@ -88,14 +88,44 @@
     return cell;
 }
 
--(UIView *)sectionFooterWith:(TableViewSectionDefinition *)sectionDefinition
+-(UIView*)headerViewWith:(TableViewSectionDefinition*)sectionDefinition
 {
-    return nil;
-}
+    UIView *headerView;
+    if( [sectionDefinition isKindOfClass:[TableViewSectionDefinitionWithHeaderView class]])
+    {
+        TableViewSectionDefinitionWithHeaderView *sectionDefinitionWithHeaderView = (TableViewSectionDefinitionWithHeaderView*)sectionDefinition;
+        
+        NSString *identifier = sectionDefinitionWithHeaderView.identifier;
+        if( identifier == nil)
+        {
+            identifier = [NSString stringWithFormat:@"Identifier-for-TableViewCellDefinitionWithView-%p", sectionDefinition];
+        }
+        headerView = (UIView*)[cachedViews objectForKey:identifier];
+        if( headerView == nil )
+        {
+            if( [sectionDefinitionWithHeaderView.ownerClass instancesRespondToSelector:@selector(init)])
+            {
+                UIView *headerViewOwner = (UIView*)[[sectionDefinitionWithHeaderView.ownerClass alloc] init];
+                NSString *nibName = sectionDefinitionWithHeaderView.nibName;
+                if( nibName == nil)
+                {
+                    nibName = NSStringFromClass(sectionDefinitionWithHeaderView.ownerClass);
+                }
+                headerView = [[[NSBundle bundleForClass:sectionDefinitionWithHeaderView.ownerClass] loadNibNamed:nibName owner:headerViewOwner options:nil] firstObject];
+                [cachedViews setObject:headerView forKey:identifier];
+            }
+        }
+    }
+    
+    if( headerView != nil)
+    {
+        if( [headerView conformsToProtocol:@protocol(TableViewSectionDataSource)]){
+            UIView<TableViewSectionDataSource> *headerViewWithDataSource = (UIView<TableViewSectionDataSource>*)headerView;
+            [headerViewWithDataSource setData:sectionDefinition.data];
+        }
+    }
 
--(UIView *)sectionHeaderWith:(TableViewSectionDefinition *)sectionDefinition
-{
-    return nil;
+    return headerView;
 }
 
 @end

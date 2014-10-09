@@ -14,7 +14,6 @@
 @protocol TableViewCellFactory <NSObject>
 
 -(UITableViewCell*)cellWith:(TableViewCellDefinition *)cellDefinition;
--(UIView*)sectionHeaderWith:(TableViewSectionDefinition *)sectionDefinition;
--(UIView*)sectionFooterWith:(TableViewSectionDefinition *)sectionDefinition;
+-(UIView*)headerViewWith:(TableViewSectionDefinition*)sectionDefinition;
 
 @end

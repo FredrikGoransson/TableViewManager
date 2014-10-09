@@ -19,15 +19,32 @@
 
 @end
 
-@interface TableViewSectionDefinitionWithIdentifier : TableViewSectionDefinition
+@protocol TableViewSectionHeightSpecifier <NSObject>
 
-@property (nonatomic, strong) NSString *identifier;
+-(float)headerHeight;
+-(float)footerHeight;
 
 @end
 
-@interface TableViewSectionDefinitionWithView : TableViewSectionDefinitionWithIdentifier
+@interface TableViewSectionDefinitionWithHeaderIdentifier : TableViewSectionDefinition<TableViewSectionHeightSpecifier>
+
+@property (nonatomic, strong) NSString *identifier;
+@property (nonatomic) float headerHeight;
+@property (nonatomic) float footerHeight;
+
+- (instancetype)initWithIdentifier:(NSString*)identifier;
++ (TableViewSectionDefinitionWithHeaderIdentifier*)sectionWithIdentifier:(NSString*)identifier;
+
+@end
+
+@interface TableViewSectionDefinitionWithHeaderView : TableViewSectionDefinitionWithHeaderIdentifier
 
 @property (nonatomic, strong) NSString *nibName;
 @property (nonatomic, strong) Class ownerClass;
+
+- (instancetype)initWithOwnerClass:(Class)ownerClass;
+- (instancetype)initWithOwnerClass:(Class)ownerClass andNibName:(NSString*)nibName;
++ (TableViewSectionDefinitionWithHeaderView*)sectionWithOwnerClass:(Class)ownerClass;
++ (TableViewSectionDefinitionWithHeaderView*)sectionWithOwnerClass:(Class)ownerClass andNibName:(NSString*)nibName;
 
 @end

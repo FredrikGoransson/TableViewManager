@@ -25,6 +25,12 @@
 @property (nonatomic, strong) NSString *identifier;
 @property (nonatomic) float height;
 
++(TableViewCellDefinitionWithIdentifier*)cellDefinitionWithIdentifier:(NSString*)identifier;
++(TableViewCellDefinitionWithIdentifier*)cellDefinitionWithIdentifier:(NSString*)identifier andHeight:(float)height;
+
+-(instancetype)initWithIdentifier:(NSString*)identifier;
+-(instancetype)initWithIdentifier:(NSString*)identifier andHeight:(float)height;
+
 @end
 
 @interface TableViewCellDefinitionWithView : TableViewCellDefinitionWithIdentifier
