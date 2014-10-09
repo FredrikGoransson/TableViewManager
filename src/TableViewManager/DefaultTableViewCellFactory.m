@@ -50,7 +50,12 @@
             if( [cellDefinitionWithView.ownerClass instancesRespondToSelector:@selector(initWithStyle:reuseIdentifier:)])
             {
                 UITableViewCell *cellOwner = (UITableViewCell*)[[cellDefinitionWithView.ownerClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellDefinitionWithView.identifier];
-                cell = [[[NSBundle bundleForClass:cellDefinitionWithView.ownerClass] loadNibNamed:cellDefinitionWithView.nibName owner:cellOwner options:nil] firstObject];
+                NSString *nibName = cellDefinitionWithView.nibName;
+                if( nibName == nil)
+                {
+                    nibName = NSStringFromClass(cellDefinitionWithView.ownerClass);
+                }
+                cell = [[[NSBundle bundleForClass:cellDefinitionWithView.ownerClass] loadNibNamed:nibName owner:cellOwner options:nil] firstObject];
                 [cachedViews setObject:cell forKey:identifier];
             }
         }

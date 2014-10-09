@@ -228,7 +228,7 @@
     XCTAssertNotNil(actualCell22);
 }
 
-- (void)testDefaultTableViewCellFactory_should_dequeue_cells_already_created{
+- (void)testDefaultTableViewCellFactory_should_cache_cells_already_created{
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
@@ -260,6 +260,38 @@
     TestTableViewCellForDequeing *actualCell11 = (TestTableViewCellForDequeing*)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     NSInteger creationCount = [actualCell11 creationCount];
     XCTAssertEqual(creationCount, 1);
+}
+
+- (void)testDefaultTableViewCellFactory_cellWith_CellDefinitionWithView_should_get_nibname_from_ownerclass_if_nil{
+    
+    // Arrange
+    UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
+    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
+    TableViewCellDefinitionWithView *cell11 = [[TableViewCellDefinitionWithView alloc] init];
+    cell11.ownerClass = [TestTableViewCell class];
+    //cell11.nibName = @"TestTableViewCell";
+    //NSStringFromClass(cell11.ownerClass);
+    [sectionDefinition1 addCell:cell11];
+    [source addSection:sectionDefinition1];
+    
+    DefaultTableViewCellFactory *cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
+    source.cellFactory = cellFactory;
+    
+    // Act
+    tableView.delegate = source;
+    tableView.dataSource = source;
+    
+    [tableView reloadData];
+    [tableView setNeedsDisplay];
+    [tableView setNeedsLayout];
+    
+    // Assert
+    TestTableViewCell *actualCell11 = (TestTableViewCell*)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    UIView *contentView = [[actualCell11 subviews] firstObject];
+    // Tag set in interface builder for contentview of TestTableViewCell.xib just so we
+    // can compare it here and make sure we got the right view
+    XCTAssertEqual(contentView.tag, 9876543210);
 }
 
 - (void)testTableViewDataSourceAndDelegate_should_return_row_height_from_CellDefinitionWithIdentifier
