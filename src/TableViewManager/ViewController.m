@@ -78,7 +78,7 @@
     self.tableView.exclusiveSections = NO;
     [self.tableView reloadData];
     [self.tableView openSection:0 animated:NO];
-        [self.tableView openSection:1 animated:NO];
+    //[self.tableView openSection:1 animated:NO];
 }
 
 @end
