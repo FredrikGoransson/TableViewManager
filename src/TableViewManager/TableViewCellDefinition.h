@@ -38,4 +38,11 @@
 @property (nonatomic, strong) NSString *nibName;
 @property (nonatomic, strong) Class ownerClass;
 
++ (TableViewCellDefinitionWithView*)cellWithOwnerClass:(Class)aOwnerClass;
++ (TableViewCellDefinitionWithView*)cellWithOwnerClass:(Class)aOwnerClass andNibName:(NSString*)aNibName;
+
+- (instancetype)initWithOwnerClass:(Class)aOwnerClass;
++ (TableViewCellDefinitionWithView*)cellWithOwnerClassNamed:(NSString*)aOwnerClassName;
+- (instancetype)initWithOwnerClass:(Class)aOwnerClass andNibName:(NSString*)aNibName;
+
 @end

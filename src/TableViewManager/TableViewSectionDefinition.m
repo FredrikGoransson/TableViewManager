@@ -40,7 +40,7 @@
         self.headerHeight = -1;
         self.footerHeight = -1;
         self.identifier = nil;
-
+        
     }
     return self;
 }

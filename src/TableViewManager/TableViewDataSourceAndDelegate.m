@@ -63,7 +63,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self EnsureCellFactory];
-
+    
     TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
     if( [cellDefinition conformsToProtocol:@protocol(TableViewCellHeightSpecifier)])
     {
@@ -74,9 +74,15 @@
     if ( [cellDefinition isKindOfClass:[TableViewCellDefinitionWithView class]])
     {
         UITableViewCell *cell = [self.cellFactory cellWith:cellDefinition];
+        if([cell conformsToProtocol:@protocol(TableViewCellHeightSpecifier)])
+        {
+            id<TableViewCellHeightSpecifier> heightSpecifier = (id<TableViewCellHeightSpecifier>)cell;
+            float height = [heightSpecifier height];
+            if( height >= 0) return height;
+        }
         return cell.frame.size.height;
     }
-
+    
     return tableView.rowHeight;
 }
 
@@ -102,6 +108,16 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    [self EnsureCellFactory];
+    
+    TableViewSectionDefinition *sectionDefinition = [self sectionAtIndex:section];
+    if( [sectionDefinition conformsToProtocol:@protocol(TableViewSectionHeightSpecifier) ])
+    {
+        id<TableViewSectionHeightSpecifier> heightSpecifier = (id<TableViewSectionHeightSpecifier>)sectionDefinition;
+        float height = [heightSpecifier footerHeight];
+        if( height >= 0) return height;
+    }
+    
     return tableView.sectionFooterHeight;
 }
 
@@ -110,7 +126,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self EnsureCellFactory];
-
+    
     TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
     return [self.cellFactory cellWith:cellDefinition];
 }
@@ -136,8 +152,9 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     TableViewSectionDefinition *sectionDefinition = [self sectionAtIndex:section];
+    if( sectionDefinition.data == nil ) return nil;
     NSString *title = [NSString stringWithFormat:@"%@", sectionDefinition.data];
-
+    
     return title;
 }
 

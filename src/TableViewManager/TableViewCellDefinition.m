@@ -57,4 +57,39 @@
 
 @implementation TableViewCellDefinitionWithView
 
+- (instancetype)initWithOwnerClass:(Class)aOwnerClass
+{
+    self = [super init];
+    if (self) {
+        self.ownerClass = aOwnerClass;
+    }
+    return self;
+}
+
+- (instancetype)initWithOwnerClass:(Class)aOwnerClass andNibName:(NSString*)aNibName
+{
+    self = [super init];
+    if (self) {
+        self.ownerClass = aOwnerClass;
+        self.nibName = aNibName;
+    }
+    return self;
+}
+
++ (TableViewCellDefinitionWithView*)cellWithOwnerClass:(Class)aOwnerClass
+{
+    return [[TableViewCellDefinitionWithView alloc] initWithOwnerClass:aOwnerClass];
+}
+
++ (TableViewCellDefinitionWithView*)cellWithOwnerClassNamed:(NSString*)aOwnerClassName
+{
+    Class aOwnerClass = NSClassFromString(aOwnerClassName);
+    return [[TableViewCellDefinitionWithView alloc] initWithOwnerClass:aOwnerClass andNibName:aOwnerClassName];
+}
+
++ (TableViewCellDefinitionWithView*)cellWithOwnerClass:(Class)aOwnerClass andNibName:(NSString*)aNibName
+{
+    return [[TableViewCellDefinitionWithView alloc] initWithOwnerClass:aOwnerClass andNibName:aNibName];
+}
+
 @end
