@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4129300A19E81BFE00948926 /* Section1Cell2TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4129300819E81BFE00948926 /* Section1Cell2TableViewCell.m */; };
+		4129300B19E81BFE00948926 /* Section1Cell2TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4129300919E81BFE00948926 /* Section1Cell2TableViewCell.xib */; };
 		419885D119E5EEF30074186E /* TestTableViewCellForDequeing.m in Sources */ = {isa = PBXBuildFile; fileRef = 419885CF19E5EEF30074186E /* TestTableViewCellForDequeing.m */; };
 		419885D219E5EEF30074186E /* TestTableViewCellForDequeing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 419885D019E5EEF30074186E /* TestTableViewCellForDequeing.xib */; };
 		419BDB3919E56B18001903AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 419BDB3819E56B18001903AF /* main.m */; };
@@ -44,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4129300619E81BAF00948926 /* TableViewCellActionSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellActionSource.h; sourceTree = "<group>"; };
+		4129300719E81BFE00948926 /* Section1Cell2TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Section1Cell2TableViewCell.h; sourceTree = "<group>"; };
+		4129300819E81BFE00948926 /* Section1Cell2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Section1Cell2TableViewCell.m; sourceTree = "<group>"; };
+		4129300919E81BFE00948926 /* Section1Cell2TableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Section1Cell2TableViewCell.xib; sourceTree = "<group>"; };
 		419885CE19E5EEF30074186E /* TestTableViewCellForDequeing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTableViewCellForDequeing.h; sourceTree = "<group>"; };
 		419885CF19E5EEF30074186E /* TestTableViewCellForDequeing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTableViewCellForDequeing.m; sourceTree = "<group>"; };
 		419885D019E5EEF30074186E /* TestTableViewCellForDequeing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestTableViewCellForDequeing.xib; sourceTree = "<group>"; };
@@ -138,6 +144,7 @@
 				419BDB5D19E56F4D001903AF /* TableViewCellDefinition.h */,
 				419BDB5E19E56F4D001903AF /* TableViewCellDefinition.m */,
 				419BDB6319E579F6001903AF /* TableViewCellDataSource.h */,
+				4129300619E81BAF00948926 /* TableViewCellActionSource.h */,
 				419BDB7419E5A333001903AF /* TableViewSectionDefinition.h */,
 				419BDB7519E5A333001903AF /* TableViewSectionDefinition.m */,
 				41A2222719E6CDA300F8AAF8 /* TableViewSectionDataSource.h */,
@@ -198,6 +205,9 @@
 				41A2221F19E6A0D800F8AAF8 /* Section0Cell0TableViewCell.m */,
 				41A2222419E6C31D00F8AAF8 /* Section0Cell1TableViewCell.h */,
 				41A2222519E6C31D00F8AAF8 /* Section0Cell1TableViewCell.m */,
+				4129300719E81BFE00948926 /* Section1Cell2TableViewCell.h */,
+				4129300819E81BFE00948926 /* Section1Cell2TableViewCell.m */,
+				4129300919E81BFE00948926 /* Section1Cell2TableViewCell.xib */,
 				41A2222B19E6D43400F8AAF8 /* Section0HeaderView.h */,
 				41A2222C19E6D43400F8AAF8 /* Section0HeaderView.m */,
 				41A2222E19E6D44300F8AAF8 /* Section0HeaderView.xib */,
@@ -306,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4129300B19E81BFE00948926 /* Section1Cell2TableViewCell.xib in Resources */,
 				419BDB4219E56B18001903AF /* Main.storyboard in Resources */,
 				419BDB4719E56B18001903AF /* LaunchScreen.xib in Resources */,
 				41A2221819E6968100F8AAF8 /* LICENSE in Resources */,
@@ -333,6 +344,7 @@
 			files = (
 				41A2222D19E6D43400F8AAF8 /* Section0HeaderView.m in Sources */,
 				419BDB5F19E56F4D001903AF /* TableViewCellDefinition.m in Sources */,
+				4129300A19E81BFE00948926 /* Section1Cell2TableViewCell.m in Sources */,
 				419BDB3F19E56B18001903AF /* ViewController.m in Sources */,
 				41A2222619E6C31D00F8AAF8 /* Section0Cell1TableViewCell.m in Sources */,
 				419BDB3C19E56B18001903AF /* AppDelegate.m in Sources */,

@@ -10,4 +10,6 @@
 
 @protocol TableViewCellActionSource <NSObject>
 
+-(id)actionHandler;
+
 @end

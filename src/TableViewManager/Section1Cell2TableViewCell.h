@@ -10,4 +10,6 @@
 
 @interface Section1Cell2TableViewCell : UITableViewCell
 
+- (IBAction)buttonTapped:(UIButton *)sender;
+
 @end
