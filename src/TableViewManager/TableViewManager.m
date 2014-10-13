@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Forefront Consulting Group AB. All rights reserved.
 //
 
-#import "TableViewDataSourceAndDelegate.h"
+#import "TableViewManager.h"
 #import "DefaultTableViewCellFactory.h"
 
-@implementation TableViewDataSourceAndDelegate
+@implementation TableViewManager
 
 - (instancetype)init
 {
@@ -82,13 +82,18 @@
     }
 }
 
+-(CGFloat)tableViewRowHeight:(UITableView*)tableView
+{
+    return tableView.rowHeight > 0 ? tableView.rowHeight : 44;
+}
+
 #pragma mark - Table View Delegate
 
 // Variable height support
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return tableView.rowHeight;
+    return [self tableViewRowHeight:tableView];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,7 +119,7 @@
         return cell.frame.size.height;
     }
     
-    return tableView.rowHeight;
+    return [self tableViewRowHeight:tableView];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -150,6 +155,15 @@
     }
     
     return tableView.sectionFooterHeight;
+}
+
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if( self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(cellSelected:)])
+    {
+        TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
+        [self.actionDelegate cellSelected:cellDefinition];
+    }
 }
 
 #pragma mark - Table View Data Source

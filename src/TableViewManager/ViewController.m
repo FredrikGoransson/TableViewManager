@@ -46,7 +46,7 @@
 - (void)setupDataSource
 {
     // Note: Init with actionDelegate:self 'forwards' all selectors to self that are performed on TableViewCells
-    self.source = [[TableViewDataSourceAndDelegate alloc] initWithViewActionDelegate:self];
+    self.source = [[TableViewManager alloc] initWithViewActionDelegate:self];
     
     // Section 0
     TableViewSectionDefinitionWithHeaderIdentifier *section0 = [TableViewSectionDefinitionWithHeaderIdentifier sectionWithIdentifier:@"Section0Identifier"];
@@ -73,7 +73,6 @@
         [section1 addCell:subCell];
     }
     
-    
     // Section 2
     TableViewSectionDefinitionWithHeaderView *section2 = [TableViewSectionDefinitionWithHeaderView sectionWithOwnerClass:[Section0HeaderView class]];
     section2.data = @"Details";
@@ -82,7 +81,7 @@
     TableViewCellDefinitionWithView *cell20 = [TableViewCellDefinitionWithView cellWithOwnerClassNamed:@"Section1Cell2TableViewCell"];
     cell20.data = self.dataEntity;
     [section2 addCell:cell20];
-        
+
     
     
     self.tableView.dataSource = self.source;
@@ -105,6 +104,11 @@
 - (void)switchSwitched:(UISwitch *)sender
 {
     NSLog(@"That was the switch");
+}
+
+-(void)cellSelected:(TableViewCellDefinition *)cellDefinition
+{
+    
 }
 
 @end

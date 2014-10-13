@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TableViewDataSourceAndDelegate.h"
+#import "TableViewManager.h"
 #import "STCollapseTableView.h"
 #import "SampleDataEntity.h"
 #import "TableViewCellActionSource.h"
+#import "TableViewManagerDelegate.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController<TableViewManagerDelegate>
 
 @property (nonatomic, strong) SampleDataEntity *dataEntity;
-@property (nonatomic, strong) TableViewDataSourceAndDelegate *source;
+@property (nonatomic, strong) TableViewManager *source;
 @property (weak, nonatomic) IBOutlet STCollapseTableView *tableView;
 
 @end

@@ -18,7 +18,7 @@
 #import "TestTableViewCellWithDataSource.h"
 #import "TestTableViewCellForDequeing.h"
 
-#import "TableViewDataSourceAndDelegate.h"
+#import "TableViewManager.h"
 
 @interface TableViewManagerTests : XCTestCase
 
@@ -111,7 +111,7 @@
 
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     
     // Act
     tableView.dataSource = source;    
@@ -122,7 +122,7 @@
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     source.cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
     
     // Act
@@ -135,7 +135,7 @@
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     source.cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewSectionDefinition *sectionDefinition2 = [[TableViewSectionDefinition alloc] init];
@@ -156,7 +156,7 @@
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     source.cellFactory = [[DefaultTableViewCellFactory alloc] initWithTableView:tableView];
 
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
@@ -194,7 +194,7 @@
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewCellDefinition *cell11 = [[TableViewCellDefinition alloc] init];
     TableViewCellDefinition *cell12 = [[TableViewCellDefinition alloc] init];
@@ -237,7 +237,7 @@
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewCellDefinitionWithView *cell11 = [[TableViewCellDefinitionWithView alloc] init];
     cell11.ownerClass = [TestTableViewCellForDequeing class];
@@ -271,7 +271,7 @@
     
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewCellDefinitionWithView *cell11 = [[TableViewCellDefinitionWithView alloc] init];
     cell11.ownerClass = [TestTableViewCell class];
@@ -301,7 +301,7 @@
 {
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewCellDefinitionWithIdentifier *cell11 = [[TableViewCellDefinitionWithIdentifier alloc] init];
     cell11.identifier = @"TestIdentifier3";
@@ -330,7 +330,7 @@
 {
     // Arrange
     UITableView *tableView = (UITableView*)viewControllerUnderTest.view;
-    TableViewDataSourceAndDelegate *source = [[TableViewDataSourceAndDelegate alloc] init];
+    TableViewManager *source = [[TableViewManager alloc] init];
     TableViewSectionDefinition *sectionDefinition1 = [[TableViewSectionDefinition alloc] init];
     TableViewCellDefinitionWithView *cell11 = [[TableViewCellDefinitionWithView alloc] init];
     cell11.identifier = @"TestIdentifier1_for_view";

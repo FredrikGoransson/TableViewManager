@@ -24,7 +24,7 @@
 		419BDB6919E58BFB001903AF /* TestTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 419BDB6719E58BFB001903AF /* TestTableViewCell.m */; };
 		419BDB6A19E58BFB001903AF /* TestTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 419BDB6819E58BFB001903AF /* TestTableViewCell.xib */; };
 		419BDB6D19E58E84001903AF /* TestTableViewCellWithDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 419BDB6C19E58E84001903AF /* TestTableViewCellWithDataSource.m */; };
-		419BDB7019E590C3001903AF /* TableViewDataSourceAndDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 419BDB6F19E590C3001903AF /* TableViewDataSourceAndDelegate.m */; };
+		419BDB7019E590C3001903AF /* TableViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 419BDB6F19E590C3001903AF /* TableViewManager.m */; };
 		419BDB7619E5A333001903AF /* TableViewSectionDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 419BDB7519E5A333001903AF /* TableViewSectionDefinition.m */; };
 		41A2221819E6968100F8AAF8 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 41A2221319E6968100F8AAF8 /* LICENSE */; };
 		41A2221A19E6968100F8AAF8 /* STCollapseTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A2221719E6968100F8AAF8 /* STCollapseTableView.m */; };
@@ -78,10 +78,11 @@
 		419BDB6819E58BFB001903AF /* TestTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestTableViewCell.xib; sourceTree = "<group>"; };
 		419BDB6B19E58E84001903AF /* TestTableViewCellWithDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestTableViewCellWithDataSource.h; sourceTree = "<group>"; };
 		419BDB6C19E58E84001903AF /* TestTableViewCellWithDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestTableViewCellWithDataSource.m; sourceTree = "<group>"; };
-		419BDB6E19E590C3001903AF /* TableViewDataSourceAndDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewDataSourceAndDelegate.h; sourceTree = "<group>"; };
-		419BDB6F19E590C3001903AF /* TableViewDataSourceAndDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewDataSourceAndDelegate.m; sourceTree = "<group>"; };
+		419BDB6E19E590C3001903AF /* TableViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewManager.h; sourceTree = "<group>"; };
+		419BDB6F19E590C3001903AF /* TableViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewManager.m; sourceTree = "<group>"; };
 		419BDB7419E5A333001903AF /* TableViewSectionDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewSectionDefinition.h; sourceTree = "<group>"; };
 		419BDB7519E5A333001903AF /* TableViewSectionDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewSectionDefinition.m; sourceTree = "<group>"; };
+		419FFFD319EC233B001EB1A4 /* TableViewManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewManagerDelegate.h; sourceTree = "<group>"; };
 		41A2221319E6968100F8AAF8 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		41A2221419E6968100F8AAF8 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		41A2221619E6968100F8AAF8 /* STCollapseTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STCollapseTableView.h; sourceTree = "<group>"; };
@@ -151,8 +152,9 @@
 				419BDB5C19E56F2E001903AF /* TableViewCellFactory.h */,
 				419BDB6019E571D5001903AF /* DefaultTableViewCellFactory.h */,
 				419BDB6119E571D5001903AF /* DefaultTableViewCellFactory.m */,
-				419BDB6E19E590C3001903AF /* TableViewDataSourceAndDelegate.h */,
-				419BDB6F19E590C3001903AF /* TableViewDataSourceAndDelegate.m */,
+				419BDB6E19E590C3001903AF /* TableViewManager.h */,
+				419BDB6F19E590C3001903AF /* TableViewManager.m */,
+				419FFFD319EC233B001EB1A4 /* TableViewManagerDelegate.h */,
 			);
 			path = TableViewManager;
 			sourceTree = "<group>";
@@ -351,7 +353,7 @@
 				419BDB6219E571D5001903AF /* DefaultTableViewCellFactory.m in Sources */,
 				41A2222319E6A15200F8AAF8 /* SampleDataEntity.m in Sources */,
 				41A2222019E6A0D800F8AAF8 /* Section0Cell0TableViewCell.m in Sources */,
-				419BDB7019E590C3001903AF /* TableViewDataSourceAndDelegate.m in Sources */,
+				419BDB7019E590C3001903AF /* TableViewManager.m in Sources */,
 				419BDB3919E56B18001903AF /* main.m in Sources */,
 				41A2221A19E6968100F8AAF8 /* STCollapseTableView.m in Sources */,
 				419BDB7619E5A333001903AF /* TableViewSectionDefinition.m in Sources */,

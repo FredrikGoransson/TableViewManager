@@ -10,17 +10,17 @@
 #import <UIKit/UIKit.h>
 #import "TableViewCellFactory.h"
 #import "TableViewCellActionSource.h"
+#import "TableViewManagerDelegate.h"
 
-@interface TableViewDataSourceAndDelegate : NSObject <UITableViewDataSource, UITableViewDelegate>
+@interface TableViewManager : NSObject <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) id<TableViewCellFactory> cellFactory;
 @property (nonatomic, strong) NSMutableArray *sections;
-@property (nonatomic, weak) id actionDelegate;
+@property (nonatomic, weak) id<TableViewManagerDelegate> actionDelegate;
 
 - (instancetype)initWithViewActionDelegate:(id)actionDelegate;
 
 -(void)addSection:(TableViewSectionDefinition*)sectionDefinition;
 -(TableViewSectionDefinition*)sectionAtIndex:(NSInteger)index;
-
 
 @end
