@@ -65,11 +65,18 @@
         TableViewCellDefinitionWithIdentifier *cellDefinitionWithIdentifier = (TableViewCellDefinitionWithIdentifier*)cellDefinition;
         
         cell = [tableView dequeueReusableCellWithIdentifier:cellDefinitionWithIdentifier.identifier];
+        //[NSException raise:@"DefaultTableViewCellFactory cellWith: cannot dequeue cell with identifier" format:@"DefaultTableViewCellFactory cellWith:CellDefinition cannot dequeue cell with identifier %@", cellDefinitionWithIdentifier.identifier];
     }
     else
     {
         NSString *randomIdentifier = [NSString stringWithFormat:@"TableViewCell-%p", cellDefinition];
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:randomIdentifier];
+    }
+    
+    if( cell == nil)
+    {
+        [NSException raise:@"DefaultTableViewCellFactory cellWith: is nil" format:@"DefaultTableViewCellFactory cellWith:CellDefinition could not create a TableViewCell"];
+
     }
 
     if( cell != nil)

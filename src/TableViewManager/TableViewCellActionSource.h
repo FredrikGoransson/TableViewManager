@@ -8,8 +8,21 @@
 
 #import <Foundation/Foundation.h>
 
+
+@protocol TableViewCellActionHandler <NSObject>
+
+-(void)handleAction:(SEL)selector withSender:(id)sender;
+
+@end
+
+@protocol TableViewCellDelegateActions <NSObject>
+
+-(id<TableViewCellActionHandler>)actionHandler;
+-(void)setActionHandler:(id)actionHandler;
+
+@end
+
 @protocol TableViewCellActionSource <NSObject>
 
--(id)actionHandler;
 
 @end

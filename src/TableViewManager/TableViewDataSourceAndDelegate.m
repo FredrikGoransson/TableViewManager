@@ -20,6 +20,16 @@
     return self;
 }
 
+- (instancetype)initWithViewActionDelegate:(id)actionDelegate
+{
+    self = [super init];
+    if (self) {
+        self.sections = [[NSMutableArray alloc] init];
+        self.actionDelegate = actionDelegate;
+    }
+    return self;
+}
+
 #pragma mark - helper methods
 
 -(void)addSection:(TableViewSectionDefinition*)sectionDefinition
@@ -43,11 +53,32 @@
     return nil;
 }
 
+-(void)configureCellForActionDelegation:(UITableViewCell*)cell
+{
+    if( [cell conformsToProtocol:@protocol(TableViewCellDelegateActions)]){
+        UITableViewCell<TableViewCellDelegateActions> *cellWithActionDelegation = (UITableViewCell<TableViewCellDelegateActions>*)cell;
+        cellWithActionDelegation.actionHandler = self;
+    }
+}
+
 - (void)EnsureCellFactory
 {
     if( self.cellFactory == nil)
     {
         [NSException raise:@"TableViewDataSourceAndDelegate cellFactory is nil" format:@"TableViewDataSourceAndDelegate must have property cellFactory set to an instance conforming to protocol TableViewCellFactory"];
+    }
+}
+
+-(void)handleAction:(SEL)selector withSender:(id)sender
+{
+    if(self.actionDelegate != nil && [self.actionDelegate respondsToSelector:selector])
+    {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        // Note, we should only do this for IBAction type selectors (or selectors with void as returntype)
+        // Since the selector (aSelector) is returning void, it doesn't make sense to try to obtain the return result of performSelector. In fact, if we do, it crashes the app.
+        [self.actionDelegate performSelector:selector withObject:sender];
+#pragma clang diagnostic pop
     }
 }
 
@@ -128,7 +159,9 @@
     [self EnsureCellFactory];
     
     TableViewCellDefinition *cellDefinition = [self cellForIndexPath:indexPath];
-    return [self.cellFactory cellWith:cellDefinition];
+    UITableViewCell *cell = [self.cellFactory cellWith:cellDefinition];
+    [self configureCellForActionDelegation:cell];
+    return cell;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

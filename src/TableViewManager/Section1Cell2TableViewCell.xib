@@ -24,6 +24,12 @@
                             <action selector="buttonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="h88-Pz-mEC"/>
                         </connections>
                     </button>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TMu-c2-rBj">
+                        <rect key="frame" x="136" y="46" width="51" height="31"/>
+                        <connections>
+                            <action selector="switchSwitched:" destination="KGk-i7-Jjw" eventType="valueChanged" id="wpE-dC-K4G"/>
+                        </connections>
+                    </switch>
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>

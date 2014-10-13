@@ -10,6 +10,33 @@
 
 @implementation Section1Cell2TableViewCell
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -20,6 +47,15 @@
     // Configure the view for the selected state
 }
 
-- (IBAction)buttonTapped:(UIButton *)sender {
+-(void)buttonTapped:(UIButton *)sender
+{
+    // Send the action to the action handler
+    [self.actionHandler handleAction:_cmd withSender:sender];
 }
+
+- (IBAction)switchSwitched:(id)sender {
+    // Send the action to the action handler
+    [self.actionHandler handleAction:_cmd withSender:sender];
+}
+
 @end
