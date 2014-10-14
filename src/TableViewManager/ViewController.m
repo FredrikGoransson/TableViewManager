@@ -46,7 +46,7 @@
 - (void)setupDataSource
 {
     // Note: Init with actionDelegate:self 'forwards' all selectors to self that are performed on TableViewCells
-    self.source = [[TableViewManager alloc] initWithViewActionDelegate:self];
+    self.source = [[TableViewManager alloc] initWithActionDelegate:self];
     
     // Section 0
     TableViewSectionDefinitionWithHeaderIdentifier *section0 = [TableViewSectionDefinitionWithHeaderIdentifier sectionWithIdentifier:@"Section0Identifier"];
@@ -103,12 +103,13 @@
 
 - (void)switchSwitched:(UISwitch *)sender
 {
-    NSLog(@"That was the switch");
+    NSIndexPath *indexPathForSelectedRow = [self.tableView indexPathForSelectedRow];
+    NSLog(@"That was the switch %d %d", (int)indexPathForSelectedRow.section, (int)indexPathForSelectedRow.row);
 }
 
 -(void)cellSelected:(TableViewCellDefinition *)cellDefinition
 {
-    
+    NSLog(@"Cell with data %@ was selected", cellDefinition.data);
 }
 
 @end

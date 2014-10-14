@@ -20,7 +20,7 @@
     return self;
 }
 
-- (instancetype)initWithViewActionDelegate:(id)actionDelegate
+- (instancetype)initWithActionDelegate:(id)actionDelegate
 {
     self = [super init];
     if (self) {
@@ -188,6 +188,7 @@
 {
     return [self.sections count];
 }
+
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     [self EnsureCellFactory];

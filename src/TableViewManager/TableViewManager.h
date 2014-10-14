@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSMutableArray *sections;
 @property (nonatomic, weak) id<TableViewManagerDelegate> actionDelegate;
 
-- (instancetype)initWithViewActionDelegate:(id)actionDelegate;
+- (instancetype)initWithActionDelegate:(id)actionDelegate;
 
 -(void)addSection:(TableViewSectionDefinition*)sectionDefinition;
 -(TableViewSectionDefinition*)sectionAtIndex:(NSInteger)index;
