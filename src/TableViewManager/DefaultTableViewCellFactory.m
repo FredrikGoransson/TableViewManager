@@ -11,6 +11,8 @@
 @implementation DefaultTableViewCellFactory {
     UITableView *tableView;
     NSMutableDictionary *cachedViews;
+    NSMutableArray *registeredCellIdentifiers;
+    NSMutableArray *registeredSectionIdentifiers;
 }
 
 -(instancetype)initWithTableView:(UITableView*)aTableView
@@ -19,6 +21,9 @@
     if (self) {
         tableView = aTableView;
         cachedViews = [[NSMutableDictionary alloc] init];
+        
+        registeredCellIdentifiers = [[NSMutableArray alloc] init];
+        registeredSectionIdentifiers = [[NSMutableArray alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMemoryWarning:) name: UIApplicationDidReceiveMemoryWarningNotification object:nil];
 
@@ -35,37 +40,40 @@
 {
     UITableViewCell *cell;
     
+    NSString *identifier;
+    if ([cellDefinition isKindOfClass:[TableViewCellDefinitionWithIdentifier class]])
+    {
+        TableViewCellDefinitionWithIdentifier *cellDefinitionWithIdentifier = (TableViewCellDefinitionWithIdentifier*)cellDefinition;
+        identifier = cellDefinitionWithIdentifier.identifier;
+    }
+    
     if( [cellDefinition isKindOfClass:[TableViewCellDefinitionWithView class]])
     {
         TableViewCellDefinitionWithView *cellDefinitionWithView = (TableViewCellDefinitionWithView*)cellDefinition;
-        
-        NSString *identifier = cellDefinitionWithView.identifier;
         if( identifier == nil)
         {
             identifier = [NSString stringWithFormat:@"Identifier-for-TableViewCellDefinitionWithView-%p", cellDefinition];
         }
-        cell = (UITableViewCell*)[cachedViews objectForKey:identifier];
-        if( cell == nil )
+        if( ![registeredCellIdentifiers containsObject:identifier])
         {
-            if( [cellDefinitionWithView.ownerClass instancesRespondToSelector:@selector(initWithStyle:reuseIdentifier:)])
+            NSString *nibName = cellDefinitionWithView.nibName;
+            if( nibName == nil)
             {
-                UITableViewCell *cellOwner = (UITableViewCell*)[[cellDefinitionWithView.ownerClass alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellDefinitionWithView.identifier];
-                NSString *nibName = cellDefinitionWithView.nibName;
-                if( nibName == nil)
-                {
-                    nibName = NSStringFromClass(cellDefinitionWithView.ownerClass);
-                }
-                cell = [[[NSBundle bundleForClass:cellDefinitionWithView.ownerClass] loadNibNamed:nibName owner:cellOwner options:nil] firstObject];
-                [cachedViews setObject:cell forKey:identifier];
+                nibName = NSStringFromClass(cellDefinitionWithView.ownerClass);
             }
+            UINib *cellNib = [UINib nibWithNibName:nibName bundle:nil];
+            [tableView registerNib:cellNib forCellReuseIdentifier:identifier];
+            [registeredCellIdentifiers addObject:identifier];
         }
     }
-    else if ([cellDefinition isKindOfClass:[TableViewCellDefinitionWithIdentifier class]])
+    
+    if( identifier != nil)
     {
-        TableViewCellDefinitionWithIdentifier *cellDefinitionWithIdentifier = (TableViewCellDefinitionWithIdentifier*)cellDefinition;
-        
-        cell = [tableView dequeueReusableCellWithIdentifier:cellDefinitionWithIdentifier.identifier];
-        //[NSException raise:@"DefaultTableViewCellFactory cellWith: cannot dequeue cell with identifier" format:@"DefaultTableViewCellFactory cellWith:CellDefinition cannot dequeue cell with identifier %@", cellDefinitionWithIdentifier.identifier];
+        cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+        if( cell == nil)
+        {
+            [NSException raise:@"DefaultTableViewCellFactory cellWith: cannot dequeue cell with identifier" format:@"DefaultTableViewCellFactory cellWith:CellDefinition cannot dequeue cell with identifier %@", identifier];
+        }
     }
     else
     {
@@ -98,32 +106,40 @@
 -(UIView*)headerViewWith:(TableViewSectionDefinition*)sectionDefinition
 {
     UIView *headerView;
+    NSString *identifier;
+    
+    if ([sectionDefinition isKindOfClass:[TableViewSectionDefinitionWithHeaderIdentifier class]])
+    {
+        TableViewSectionDefinitionWithHeaderIdentifier *sectionHeaderDefinitionWithIdentifier = (TableViewSectionDefinitionWithHeaderIdentifier*)sectionDefinition;
+        identifier = sectionHeaderDefinitionWithIdentifier.identifier;
+    }
+    
     if( [sectionDefinition isKindOfClass:[TableViewSectionDefinitionWithHeaderView class]])
     {
         TableViewSectionDefinitionWithHeaderView *sectionDefinitionWithHeaderView = (TableViewSectionDefinitionWithHeaderView*)sectionDefinition;
-        
-        NSString *identifier = sectionDefinitionWithHeaderView.identifier;
+        NSString *nibName = sectionDefinitionWithHeaderView.nibName;
+        if( nibName == nil)
+        {
+            nibName = NSStringFromClass(sectionDefinitionWithHeaderView.ownerClass);
+        }
         if( identifier == nil)
         {
-            identifier = [NSString stringWithFormat:@"Identifier-for-TableViewCellDefinitionWithView-%p", sectionDefinition];
+            identifier = [NSString stringWithFormat:@"Identifier-for-TableViewSectionDefinitionWithView-%@", nibName];
         }
-        headerView = (UIView*)[cachedViews objectForKey:identifier];
-        if( headerView == nil )
+        if( ![registeredSectionIdentifiers containsObject:identifier])
         {
-            if( [sectionDefinitionWithHeaderView.ownerClass instancesRespondToSelector:@selector(init)])
-            {
-                UIView *headerViewOwner = (UIView*)[[sectionDefinitionWithHeaderView.ownerClass alloc] init];
-                NSString *nibName = sectionDefinitionWithHeaderView.nibName;
-                if( nibName == nil)
-                {
-                    nibName = NSStringFromClass(sectionDefinitionWithHeaderView.ownerClass);
-                }
-                headerView = [[[NSBundle bundleForClass:sectionDefinitionWithHeaderView.ownerClass] loadNibNamed:nibName owner:headerViewOwner options:nil] firstObject];
-                [cachedViews setObject:headerView forKey:identifier];
-            }
+            
+            UINib *cellNib = [UINib nibWithNibName:nibName bundle:nil];
+            [tableView registerNib:cellNib forHeaderFooterViewReuseIdentifier:identifier];
+            [registeredSectionIdentifiers addObject:identifier];
         }
     }
     
+    if (identifier != nil)
+    {
+        headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:identifier];
+    }
+
     if( headerView != nil)
     {
         if( [headerView conformsToProtocol:@protocol(TableViewSectionDataSource)]){

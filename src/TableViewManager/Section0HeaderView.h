@@ -10,7 +10,7 @@
 #import "TableViewSectionDataSource.h"
 #import "SampleDataEntity.h"
 
-@interface Section0HeaderView : UIView<TableViewSectionDataSource>
+@interface Section0HeaderView : UITableViewHeaderFooterView<TableViewSectionDataSource>
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
 
 @end

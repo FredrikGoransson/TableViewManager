@@ -53,21 +53,6 @@
     {
         SampleDataEntity *dataEntity = (SampleDataEntity*)data;
         self.generalSwitch.on = dataEntity.showMidSection;
-
-        [self addObserver:self forKeyPath:NSStringFromSelector(@selector(showMidSection)) options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
-    }
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if ([object isKindOfClass:[SampleDataEntity class]] && [keyPath isEqualToString:NSStringFromSelector(@selector(showMidSection))]) {
-        
-        SampleDataEntity *dataEntity = (SampleDataEntity*)object;
-        self.generalSwitch.on = dataEntity.showMidSection;
-
     }
 }
 

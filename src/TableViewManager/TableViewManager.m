@@ -84,7 +84,7 @@
 
 -(CGFloat)tableViewRowHeight:(UITableView*)tableView
 {
-    return tableView.rowHeight > 0 ? tableView.rowHeight : UITableViewAutomaticDimension;
+    return tableView.rowHeight > 0 ? tableView.rowHeight : 44.0;
 }
 
 -(BOOL)conformsToProtocol:(Protocol *)aProtocol

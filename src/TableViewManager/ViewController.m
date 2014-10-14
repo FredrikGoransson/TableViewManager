@@ -40,6 +40,30 @@
                                [[SampleDataSubEntity alloc] initWithValue:@"World"],
                                [[SampleDataSubEntity alloc] initWithValue:@"Foo"],
                                [[SampleDataSubEntity alloc] initWithValue:@"Bar"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Hello"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"World"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Foo"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Bar"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Hello"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"World"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Foo"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Bar"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Hello"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"World"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Foo"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Bar"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Hello"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"World"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Foo"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Bar"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Hello"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"World"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Foo"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Bar"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Hello"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"World"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Foo"],
+                               [[SampleDataSubEntity alloc] initWithValue:@"Bar"],
                                 nil];
     
 }
@@ -103,20 +127,32 @@
 
 -(void)tableView:(UITableView *)tableView didOpenSection:(NSUInteger)sectionIndex
 {
-    self.dataEntity.showMidSection = YES;
+    if( sectionIndex == 1)
+    {
+        self.dataEntity.showMidSection = YES;
     
-    TableViewSectionDefinition *sectionDefinition = [self.source sectionAtIndex:2];
-    sectionDefinition.data = self.dataEntity;
+        UITableViewCell<TableViewCellDataSource> *cell = (UITableViewCell<TableViewCellDataSource>*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+        [cell setData:self.dataEntity];
     
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+    //TableViewSectionDefinition *sectionDefinition = [self.source sectionAtIndex:2];
+    //sectionDefinition.data = self.dataEntity;
+    
+    //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 -(void)tableView:(UITableView *)tableView didCloseSection:(NSUInteger)sectionIndex
 {
+    if( sectionIndex == 1)
+    {
     self.dataEntity.showMidSection = NO;
     
-    TableViewSectionDefinition *sectionDefinition = [self.source sectionAtIndex:2];
-    sectionDefinition.data = self.dataEntity;
+    UITableViewCell<TableViewCellDataSource> *cell = (UITableViewCell<TableViewCellDataSource>*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
+    [cell setData:self.dataEntity];
+    }
+    //TableViewSectionDefinition *sectionDefinition = [self.source sectionAtIndex:2];
+    //sectionDefinition.data = self.dataEntity;
 }
 
 -(void)buttonTapped:(UIButton*)sender
@@ -129,10 +165,12 @@
     NSIndexPath *indexPathForSelectedRow = [self.tableView indexPathForSelectedRow];
     NSLog(@"That was the switch %d %d", (int)indexPathForSelectedRow.section, (int)indexPathForSelectedRow.row);
     
-    if( sender.on)
-        [self.tableView openSection:1 animated:NO];
+    self.dataEntity.showMidSection = sender.on;
+
+    if( self.dataEntity.showMidSection)
+        [self.tableView openSection:1 animated:YES];
     else
-        [self.tableView closeSection:1 animated:NO];
+        [self.tableView closeSection:1 animated:YES];
 }
 
 -(void)cellSelected:(TableViewCellDefinition *)cellDefinition
