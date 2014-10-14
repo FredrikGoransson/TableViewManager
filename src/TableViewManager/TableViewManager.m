@@ -84,7 +84,7 @@
 
 -(CGFloat)tableViewRowHeight:(UITableView*)tableView
 {
-    return tableView.rowHeight > 0 ? tableView.rowHeight : 44;
+    return tableView.rowHeight > 0 ? tableView.rowHeight : UITableViewAutomaticDimension;
 }
 
 #pragma mark - Table View Delegate
@@ -157,7 +157,7 @@
     return tableView.sectionFooterHeight;
 }
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if( self.actionDelegate && [self.actionDelegate respondsToSelector:@selector(cellSelected:)])
     {
