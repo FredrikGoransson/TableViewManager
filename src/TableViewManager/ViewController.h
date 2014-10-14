@@ -13,7 +13,7 @@
 #import "TableViewCellActionSource.h"
 #import "TableViewManagerDelegate.h"
 
-@interface ViewController : UIViewController<TableViewManagerDelegate>
+@interface ViewController : UIViewController<TableViewManagerDelegate, STCollapseTableViewDelegate>
 
 @property (nonatomic, strong) SampleDataEntity *dataEntity;
 @property (nonatomic, strong) TableViewManager *source;

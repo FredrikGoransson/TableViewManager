@@ -15,6 +15,12 @@
 
 @end
 
+@protocol TableViewSectionActionHandler <NSObject>
+
+-(void)handleAction:(SEL)selector withSender:(id)sender;
+
+@end
+
 @protocol TableViewCellDelegateActions <NSObject>
 
 -(id<TableViewCellActionHandler>)actionHandler;

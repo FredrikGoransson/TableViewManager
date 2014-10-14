@@ -87,6 +87,25 @@
     return tableView.rowHeight > 0 ? tableView.rowHeight : UITableViewAutomaticDimension;
 }
 
+-(BOOL)conformsToProtocol:(Protocol *)aProtocol
+{
+    return [super conformsToProtocol:aProtocol] || [self.actionDelegate conformsToProtocol:aProtocol];
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+    return [super respondsToSelector:aSelector] || [self.actionDelegate respondsToSelector:aSelector];
+}
+
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+    if ([self.actionDelegate respondsToSelector:aSelector])
+    {
+        return self.actionDelegate;
+    }
+    return nil;
+}
+
 #pragma mark - Table View Delegate
 
 // Variable height support

@@ -29,6 +29,7 @@
  ***********************************************************************************/
 
 #import <UIKit/UIKit.h>
+#import "STCollapseTableViewDelegate.h"
 
 /**
  *	STCollapseTableView is a UITableView subclass that automatically collapse and/or expand your sections.
@@ -37,7 +38,6 @@
  *  By default all the sections are closed.
  */
 @interface STCollapseTableView : UITableView
-
 
 /**
  *	This property allow to enable/disable the exclusivity.

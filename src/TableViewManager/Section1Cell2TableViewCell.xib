@@ -33,6 +33,9 @@
                 </subviews>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
+            <connections>
+                <outlet property="generalSwitch" destination="TMu-c2-rBj" id="xVt-sC-gQh"/>
+            </connections>
             <point key="canvasLocation" x="139" y="233"/>
         </tableViewCell>
     </objects>

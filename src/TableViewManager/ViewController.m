@@ -34,6 +34,7 @@
     self.dataEntity = [[SampleDataEntity alloc] init];
     self.dataEntity.heading = @"Sample Heading";
     self.dataEntity.title = @"Sample title";
+    self.dataEntity.showMidSection = NO;
     self.dataEntity.subData = [[NSMutableArray alloc] initWithObjects:
                                [[SampleDataSubEntity alloc] initWithValue:@"Hello"],
                                [[SampleDataSubEntity alloc] initWithValue:@"World"],
@@ -64,7 +65,7 @@
     
     // Section 1
     TableViewSectionDefinitionWithHeaderView *section1 = [TableViewSectionDefinitionWithHeaderView sectionWithOwnerClass:[Section0HeaderView class]];
-    section1.data = @"Details";
+    section1.data = self.dataEntity;
     [self.source addSection:section1];
     for (NSString *subEntity in self.dataEntity.subData)
     {
@@ -93,7 +94,29 @@
     self.tableView.exclusiveSections = NO;
     [self.tableView reloadData];
     [self.tableView openSection:0 animated:NO];
+    if( self.dataEntity.showMidSection)
+       [self.tableView openSection:1 animated:NO];
+    else
+        [self.tableView closeSection:1 animated:NO];
     [self.tableView openSection:2 animated:NO];
+}
+
+-(void)tableView:(UITableView *)tableView didOpenSection:(NSUInteger)sectionIndex
+{
+    self.dataEntity.showMidSection = YES;
+    
+    TableViewSectionDefinition *sectionDefinition = [self.source sectionAtIndex:2];
+    sectionDefinition.data = self.dataEntity;
+    
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+-(void)tableView:(UITableView *)tableView didCloseSection:(NSUInteger)sectionIndex
+{
+    self.dataEntity.showMidSection = NO;
+    
+    TableViewSectionDefinition *sectionDefinition = [self.source sectionAtIndex:2];
+    sectionDefinition.data = self.dataEntity;
 }
 
 -(void)buttonTapped:(UIButton*)sender
@@ -105,6 +128,11 @@
 {
     NSIndexPath *indexPathForSelectedRow = [self.tableView indexPathForSelectedRow];
     NSLog(@"That was the switch %d %d", (int)indexPathForSelectedRow.section, (int)indexPathForSelectedRow.row);
+    
+    if( sender.on)
+        [self.tableView openSection:1 animated:NO];
+    else
+        [self.tableView closeSection:1 animated:NO];
 }
 
 -(void)cellSelected:(TableViewCellDefinition *)cellDefinition

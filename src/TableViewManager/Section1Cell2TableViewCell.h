@@ -7,13 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TableViewCellDataSource.h"
 #import "TableViewCellActionSource.h"
+#import "SampleDataEntity.h"
 
-@interface Section1Cell2TableViewCell : UITableViewCell<TableViewCellDelegateActions>
+@interface Section1Cell2TableViewCell : UITableViewCell<TableViewCellDelegateActions, TableViewCellDataSource>
 
 @property (nonatomic, weak) id<TableViewCellActionHandler> actionHandler;
 
 - (IBAction)buttonTapped:(UIButton *)sender;
 - (IBAction)switchSwitched:(UISwitch *)sender;
+@property (weak, nonatomic) IBOutlet UISwitch *generalSwitch;
 
 @end

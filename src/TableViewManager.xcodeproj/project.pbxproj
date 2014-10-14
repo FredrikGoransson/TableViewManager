@@ -46,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		411A0D0219ED4197003DBCDC /* STCollapseTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STCollapseTableViewDelegate.h; sourceTree = "<group>"; };
 		4129300619E81BAF00948926 /* TableViewCellActionSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCellActionSource.h; sourceTree = "<group>"; };
 		4129300719E81BFE00948926 /* Section1Cell2TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Section1Cell2TableViewCell.h; sourceTree = "<group>"; };
 		4129300819E81BFE00948926 /* Section1Cell2TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Section1Cell2TableViewCell.m; sourceTree = "<group>"; };
@@ -234,6 +235,7 @@
 			children = (
 				41A2221619E6968100F8AAF8 /* STCollapseTableView.h */,
 				41A2221719E6968100F8AAF8 /* STCollapseTableView.m */,
+				411A0D0219ED4197003DBCDC /* STCollapseTableViewDelegate.h */,
 			);
 			path = STCollapseTableView;
 			sourceTree = "<group>";

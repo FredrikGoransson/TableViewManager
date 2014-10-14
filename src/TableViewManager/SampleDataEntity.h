@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *heading;
 @property (nonatomic, strong) NSString *title;
+@property (nonatomic) BOOL showMidSection;
 
 @property (nonatomic, strong) NSMutableArray *subData;
 

@@ -184,7 +184,13 @@
             [self reloadData];
         }
 	}
+    
+    if(self.collapseDelegate != nil && [self.collapseDelegate conformsToProtocol:@protocol(STCollapseTableViewDelegate)])
+    {
+        id<STCollapseTableViewDelegate> extendedDelegate = (id<STCollapseTableViewDelegate>)self.collapseDelegate;
+        [extendedDelegate tableView:self didOpenSection:sectionIndex];
     }
+}
 
 - (void)closeSection:(NSUInteger)sectionIndex animated:(BOOL)animated
 {
@@ -199,7 +205,12 @@
     {
         [self reloadData];
     }
-
+    
+    if(self.collapseDelegate != nil && [self.collapseDelegate conformsToProtocol:@protocol(STCollapseTableViewDelegate)])
+    {
+        id<STCollapseTableViewDelegate> extendedDelegate = (id<STCollapseTableViewDelegate>)self.collapseDelegate;
+        [extendedDelegate tableView:self didCloseSection:sectionIndex];
+    }
 }
 
 - (void)toggleSection:(NSUInteger)sectionIndex animated:(BOOL)animated
